@@ -1,0 +1,113 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calculadora Arcaica</title>
+    <style>
+        #Calculadora{
+            width: 30%;
+            margin: 20px auto;
+            font-size: 1.3em;
+            text-align: center;
+            background-color: darkviolet;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        #botones{
+            width: 40%;
+            margin: 5px auto;
+        }
+        .boton{
+            width: 30px;
+        }
+    </style>
+    <script>
+        var pantalla = "", cantidad = 0, ultimo_operador = "=";
+        function cuadro(numero){
+            if(ultimo_operador == "="){
+                cantidad = 0;
+            }
+            document.getElementById("display").value = pantalla + numero;
+            pantalla += numero;
+        }
+        function operaciones(operador){            
+            switch(operador){
+                case "+":
+                    cantidad = cantidad + Number(pantalla);
+                    ultimo_operador = "+";
+                    break;
+                case "-":
+                    if(ultimo_operador != "="){
+                        cantidad = cantidad - Number(pantalla);
+                    }
+                    else{
+                        cantidad = Number(pantalla);
+                    }
+                    ultimo_operador = "-";
+                    break;
+                case "/":                    
+                    if(ultimo_operador != "="){
+                        cantidad = cantidad / Number(pantalla);
+                    }
+                    else{
+                        cantidad = Number(pantalla);
+                    }
+                    ultimo_operador = "/";
+                    break;
+                case "*":
+                    if(ultimo_operador != "="){
+                        cantidad = cantidad * Number(pantalla);
+                    }
+                    else{
+                        cantidad = Number(pantalla);
+                    }
+                    ultimo_operador = "*";
+                    break;
+                case "=":
+                    document.getElementById("display").value = cantidad;
+                    if(ultimo_operador != "="){
+                        operaciones(ultimo_operador);
+                    }
+                    ultimo_operador = "=";
+                    break;                
+            }
+            pantalla = ""
+            document.getElementById("display").value = cantidad;            
+        }
+    </script>
+</head>
+<body>
+    <div id="Calculadora">
+        <h1>Calcuradora</h1>
+        <div><input type=text id="display"></div>
+        <div id="Botones">
+            <table>
+                <tr>
+                    <td><input type=button value="7" class="boton" onclick="cuadro(7)"></td>
+                    <td><input type=button value="8" class="boton" onclick="cuadro(8)"></td>
+                    <td><input type=button value="9" class="boton" onclick="cuadro(9)"></td>
+                    <td><input type=button value="+" class="boton" onclick="operaciones('+')"></td>
+                </tr>
+                <tr>
+                    <td><input type=button value="4" class="boton" onclick="cuadro(4)"></td>
+                    <td><input type=button value="5" class="boton" onclick="cuadro(5)"></td>
+                    <td><input type=button value="6" class="boton" onclick="cuadro(6)"></td>
+                    <td><input type=button value="-" class="boton" onclick="operaciones('-')"></td>
+                </tr>
+                <tr>
+                    <td><input type=button value="1" class="boton" onclick="cuadro(1)"></td>
+                    <td><input type=button value="2" class="boton" onclick="cuadro(2)"></td>
+                    <td><input type=button value="3" class="boton" onclick="cuadro(3)"></td>
+                    <td><input type=button value="/" class="boton" onclick="operaciones('/')"></td>                   
+                </tr>
+                <tr>
+                    <td><input type=button value="0" class="boton" onclick="cuadro(0)"></td>
+                    <td></td>
+                    <td><input type=button value="*" class="boton" onclick="operaciones('*')"></td>
+                    <td><input type=button value="=" class="boton" onclick="operaciones('=')"></td>
+                </tr>
+            </table>        
+        </div>
+    </div>
+</body>
+</html>
